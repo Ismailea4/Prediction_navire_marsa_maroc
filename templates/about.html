@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}À propos{% endblock %}
+
+{% block content %}
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+<a href="{{ url_for('home') }}" class="button">Retour à l'accueil</a>
+<h2>À propos</h2>
+<p>Créateur : Ismail ELADRAOUI - Saad QACIF</p>
+<p>Encadrant : Ilyass LAMRANI</p>
+<p>Entreprise : Marsa Maroc</p>
+<p>&copy; 2024 Marsa Maroc</p>
+{% endblock %}

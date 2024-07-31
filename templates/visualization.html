@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Visualisation{% endblock %}
+
+{% block content %}
+<div class="header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+    <h1>Visualisation de données au coordonné du port de Casablanca</h1>
+</div>
+<form onsubmit="event.preventDefault(); visualize();">
+    <label for="plot_type">Choisir le type de visualisation :</label>
+    <select name="plot_type" id="plot_type">
+        <option value="Temperature_daily">Plot temperature</option>
+        <option value="Precipitation_daily">Plot precipitation</option>
+        <option value="daily_pression">Plot pression atmosphérique au niveau de la mer</option>
+        <option value="plot_vitesse_de_vent">Plot vitesse de vent</option>
+        <option value="Trafic_mensuel">Trafic mensuel des navires à conteneur au port de Casablanca</option>
+        <option value="Nbr_cont_importé">Nombre de contenaire importé</option>
+        <option value="Nbr_cont_exporté">Nombre de contenaire exporté</option>
+        <option value="Nbr_nav_daily">Nombre de Navire selon chaque jour</option>
+        <option value="Occurrence_nbr_nav">Occurence de Nombre de Navire</option>
+        <option value="Val_devise_maroc">Valeur de la devise marocaine</option>
+        <option value="Valeur_caburant">Valeur du carburant </option>
+        <!-- Ajoutez d'autres options si nécessaire -->
+    </select>
+    <label for="year">Choisir l'année :</label>
+    <select type="number" name="year" id="year" required>
+        <option value=2021>2021</option>
+        <option value=2022>2022</option>
+        <option value=2023>2023</option>
+        <option value=212223>2021/2022/2023</option>
+    </select>
+    <button type="submit" class="visualize-btn">Visualiser</button>
+</form>
+<div id="image-container"></div>
+<script>
+    function visualize() {
+        const plotType = document.getElementById('plot_type').value;
+        const year = document.getElementById('year').value;
+
+        fetch('/visualization', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                'plot_type': plotType,
+                'year': year
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = `<img src="${data.image_url}" alt="Visualisation">`;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+<a href="{{ url_for('home') }}" class="button">Retour à l'accueil</a>
+<!-- Include plots here -->
+{% endblock %}

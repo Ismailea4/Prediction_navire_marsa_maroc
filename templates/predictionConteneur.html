@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block title %}Prédiction de conteneur{% endblock %}
+{%block head%}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{%endblock%} {% block content %}
+
+<div class="header">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo"/>
+  <h1>Prédiction de nombre de conteneur au port de Casablanca</h1>
+</div>
+<form id="predictContainerForm">
+  <label for="name_ship">Nom du navire:</label>
+  <select id="name_ship" name="name_ship" required>
+    {% for name in ship_names %}
+    <option value="{{ name }}">{{ name.strip() }}</option>
+    {% endfor %}
+  </select>
+  <label for="ETA_date">ETA (Estimate Time Arrival):</label>
+  <input type="date" id="ETA_date" name="ETA_date" min="{{ min_date }}" required />
+  <button class="button" type="submit">Prédire</button>
+</form>
+<div id="predictionResult" style="margin-top: 20px"></div>
+
+<script>
+  $(document).ready(function () {
+    $("#predictContainerForm").on("submit", function (event) {
+      event.preventDefault();
+      var name_ship = $("#name_ship").val();
+      var ETA_date = $("#ETA_date").val();
+
+      $.ajax({
+        url: "/predictionConteneur",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ name_ship: name_ship, ETA_date: ETA_date }),
+        success: function (response) {
+          var result =
+            "<p>Le navire <strong>" +
+            response.name_ship +
+            "</strong> de NUMERO LOYD <strong>" +
+            response.N_LOYD_NAVIRE +
+            "</strong> va importer le jour <strong>" +
+            response.ETA_date +
+            "</strong> :</p>";
+          result +=
+            "<p style= 'border-style: solid hidden; border: 2px solid rgb(139,0,0); border-radius: 24px;display: inline-block;padding: 3%;'>Conteneur type 2: <strong>" +
+            response.container_2 +
+            "</strong></p>";
+          result +=
+            "<p style= 'border-style: solid hidden; border: 2px solid rgb(139,0,0); border-radius: 24px;display: inline-block;padding: 3%;'>Conteneur type 4: <strong>" +
+            response.container_4 +
+            "</strong></p>";
+          $("#predictionResult").html(result);
+        },
+      });
+    });
+  });
+</script>
+
+<a href="{{ url_for('home') }}" class="button">Retour à l'accueil</a>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<div class="header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+    <h1>Accueil</h1>
+</div>
+<div class="main-content">
+    <a href="{{ url_for('predictShip') }}" class="button">Predire le nombre de navire</a>
+    <a href="{{ url_for('predictionConteneur') }}" class="button">Predire le nombre de conteneur</a>
+    <a href="{{ url_for('visualization') }}" class="button">Visualisation de donné existante</a>
+    <a href="{{ url_for('about') }}" class="button">À propos</a>
+</div>
+{% endblock %}

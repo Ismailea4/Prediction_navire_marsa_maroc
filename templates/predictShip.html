@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Prédiction de navire{% endblock %}
+
+{%block head%}<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>{%endblock%}
+
+{% block content %}
+
+<div class="header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+    <h1>Prédiction de nombre de navire au port de Casablanca</h1>
+</div>
+<form id="predictionForm">
+    <label for="start_date">Date de début:</label>
+    <input type="date" id="start_date" name="start_date" min="{{ min_date }}" required>
+    <label for="end_date">Date de fin:</label>
+    <input type="date" id="end_date" name="end_date" min="{{ min_date }}" required>
+    <button class="button" type="submit">Prédire</button>
+</form>
+<div id="predictionResults"></div>
+<button class="button" id="downloadCsv" style="display:none;">Télécharger en CSV</button>
+
+<script>
+    $(document).ready(function() {
+        $("#predictionForm").on("submit", function(event) {
+            event.preventDefault();
+            const columns = ['Date','Temperature Moyenne', 'Precipitation', 'Vitesse du vent','Pression atmospherique au niveau de la mer', 'Exchange Rate','Oil Value', 'Nombre de Navire'];
+            var startDate = $("#start_date").val();
+            var endDate = $("#end_date").val();
+
+            $.ajax({
+                url: "/predictShip",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ start_date: startDate, end_date: endDate }),
+                success: function(response) {
+                    var table = '<table border="1"><tr><th style="background-color: #f2f2f2; color: #000000;">Date</th><th>Temperature Moyenne</th><th>Precipitation</th><th>Vitesse du vent</th><th>Pression atmospherique</th><th>Exchange Rate</th><th>Oil Value</th><th style="background-color: rgb(53, 17, 17);">Nombre de Navire</th></tr>';
+                    response.data.forEach(function(row) {
+                        table += '<tr>';
+                        columns.forEach(column => {
+                            table += '<td>' + row[column] + '</td>';
+                        })
+                        table += '</tr>';
+                    });
+                    table += '</table>';
+                    $("#predictionResults").html(table);
+                    $("#downloadCsv").show();
+
+                    // Save the response data to a global variable for CSV download
+                    window.predictionData = response.data;
+                }
+            });
+        });
+
+        $("#downloadCsv").on("click", function() {
+            var csv = 'Date,Temperature Moyenne,Precipitation,Vitesse du vent,Pression atmospherique,Exchange Rate,Oil Value,Nombre de Navire\n';
+            window.predictionData.forEach(function(row) {
+                csv += row.Date + ',' + row['Temperature Moyenne'] + ',' + row['Precipitation'] + ',' + row['Vitesse du vent'] + ',' + row['Pression atmospherique'] + ',' + row['Exchange Rate'] + ',' + row['Oil Value'] + ',' + row['Nombre de Navire'] + '\n';
+            });
+
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'prediction.csv';
+            hiddenElement.click();
+        });
+    });
+</script>
+<a href="{{ url_for('home') }}" class="button">Retour à l'accueil</a>
+
+{% endblock %}

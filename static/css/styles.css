@@ -1,0 +1,204 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.content {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+    background-color: darkred;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 100px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.main-content {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    display: inline-block;
+    background-color: darkred;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: red;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 150px;
+}
+
+th {
+    background-color: darkred;
+    color: white;
+}
+
+.add-row-btn {
+    display: inline-block;
+    background-color: darkred;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.add-row-btn:hover {
+    background-color: red;
+}
+
+table input {
+    width: 60px; /* Largeur désirée */
+    height: 30px; /* Hauteur désirée */
+    padding: auto;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label, select, input, .visualize-btn {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.visualize-btn, .back-btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.visualize-btn:hover, .back-btn:hover {
+    background-color: #c9302c;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+#plotContainer {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+#plotContainer img {
+    max-width: 100%;
+    height: auto;
+}
+
+.date-column {
+    background-color: #82640c; /* Couleur différente pour la colonne Date */
+}
+
+/* CSS pour styliser les éléments du formulaire */
+form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  form select,
+  form input[type="date"],
+  form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  form select:focus,
+  form input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* CSS pour le conteneur de résultats */
+  #predictionResult {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  #predictionResult p {
+    margin: 10px 0;
+  }
+  
